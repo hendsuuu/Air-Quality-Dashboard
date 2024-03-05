@@ -10,17 +10,14 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 def main():
     st.title("Analisis Dataset Air Quality Kota Gucheng dan Guanyuan")
 
-    menu  = ["Home","Dataset","EDA","Question"]
-    st.sidebar.title("Menu")
-    pilihan = st.sidebar.selectbox("Menu",menu)
+    menu  = ["EDA","Question"]
+    
+    with st.sidebar:
+        st.title("Menu")
+        pilihan = st.sidebar.selectbox("Menu",menu)
 
 
-    if pilihan == "Home":
-        st.subheader("Home")
-    elif pilihan == "Dataset":
-        st.subheader("Dataset")
-        st.dataframe(df)
-    elif pilihan == "EDA":
+    if pilihan == "EDA":
         st.subheader("Exploratory Data Analysis")
         # korelasi=df.corr()
         # st.dataframe(korelasi)
@@ -42,12 +39,30 @@ def main():
         st.write("Conclusion :")
         st.write("Pada grafik diaas merupakan data polutan pada tanggal januari 2016 di gucheng dan guanyuan.X merupakan Jam dalam sehari sedangkan Y merupakan tingkat konsntrasi polutan.dari grafik kita dapat menyimpulkan kadar polutan cendeerung tinggi pada jam sore-malam.polutan mulai mengalami kenaikan pada sekitar jam 16 hingga mencapai titik tertinggi pada jam 22 di kota gucheng.hal tersebut menunjukkan")
         
+        min_date = df["date"].min()
+        max_date = df["date"].max()
         
-        # start_date = st.date_input("Pilih tanggal Mulai")
-        # end_date = st.date_input("Pilih tanggal Akhir")
-        question2('2016-01-01', '2016-01-31',['PM2.5','PM10','SO2','NO2'])
+        # start_date, end_date = st.date_input(
+        #     label='Rentang Waktu',min_value=min_date,
+        #     max_value=max_date,
+        #     value=[min_date, max_date]
+        # )
+        
+        
+        st.write("Kadar Polutan PM2.5")
+        question2('2016-01-01', '2016-01-31',['PM2.5'])
+        st.write("Kadar Polutan PM10")
+        question2('2016-01-01', '2016-01-31',['PM10'])
+        st.write("Kadar Polutan SO2")
+        question2('2016-01-01', '2016-01-31',['SO2'])
+        st.write("Kadar Polutan NO2")
+        question2('2016-01-01', '2016-01-31',['NO2'])
+        st.write("Kadar Polutan CO")
+        question2('2016-01-01', '2016-01-31',['CO'])
+        st.write("Kadar Polutan O3")
+        question2('2016-01-01', '2016-01-31',['O3'])
         st.write("Conclusion :")
-        st.write("Visualisasi data kadar polutan yang ada di Gucheng dan guanyuan mulai 1 januari 2016 sampai 31 januari 2016 Grafik diatas berisi informasi tentang kadar polutan yang ada,garis tengah menunjukkan rata2 kadar polutan dalam sehari sedangkan offside dari garis tersebut menunjukkan data tertinggi dan data terendah kadar polutan dalam seharinya.kadar polutan pada tahun 2016 cenderung tinggi pada tanggal 1-2 januari.pada grafik diatas cenderung naik turun unuk kadar polutan.naik saat weekend dan cenederung turun disaat weekday mungkin dikarenakan jalur lalu lintas yang tinggi saat weekend")
+        st.write("Visualisasi data kadar polutan yang ada di Gucheng dan guanyuan mulai 1 januari 2016 sampai 31 januari 2016 Grafik diatas berisi informasi tentang kadar polutan yang ada,garis tengah menunjukkan rata2 kadar polutan dalam sehari sedangkan offside dari garis tersebut menunjukkan data tertinggi dan data terendah kadar polutan dalam seharinya.kadar polutan pada Januari 2016 cenderung tinggi pada tanggal 1-2 januari.pada grafik diatas cenderung naik turun unuk kadar polutan.naik saat weekend dan cenederung turun disaat weekday mungkin dikarenakan jalur lalu lintas yang tinggi saat weekend")
 
 def corr():
     st.write("Visualisasi korelasi antar field,Merah melambagkan korelasi positif antar field contoh PM2.5 memiliki tingka korelasi 0.87 dengan PM10 artinya nilai antara PM2.5 linear dengan PM10 jika PM2.5 memiliki nilai yang tinggi maka otomatis pm 10 juga akan meiliki nilai yang tinggi dan sebaliknya jika memiliki korelasi negatif suatu nilai akan berkebalikan dengan nilai lainnya conohnya antara PRES dan TEMP , PRES merupakan tekanan udara sedangkan TEMP adalah temperatur, jika TEMP tinggi maka PRES akan rendah nilainya dan sebaliknya.")
